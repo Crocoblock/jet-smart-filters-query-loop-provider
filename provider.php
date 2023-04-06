@@ -322,7 +322,7 @@ class JSF_Query_Loop_Provider extends Jet_Smart_Filters_Provider_Base {
 
 	/**
 	 * Get provider wrapper selector
-	 * Its CSS selector of HTML element with provider content.
+	 * Its CSS selector of related HTML element with provider content.
 	 * @required: true
 	 */
 	public function get_wrapper_selector() {
