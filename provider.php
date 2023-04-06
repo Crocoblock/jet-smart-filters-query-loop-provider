@@ -143,6 +143,9 @@ class JSF_Query_Loop_Provider extends Jet_Smart_Filters_Provider_Base {
 
 	/**
 	 * Get filtered provider content.
+	 * jet_smart_filters() parse arguments from request and combine into array in the same format and same structures as arguments for WP_Query class
+	 * parsed argumnets could be retrieved with jet_smart_filters()->query->get_query_args() method.
+	 * 
 	 * @required: true
 	 */
 	public function ajax_get_content() {
@@ -246,7 +249,9 @@ class JSF_Query_Loop_Provider extends Jet_Smart_Filters_Provider_Base {
 
 	/**
 	 * Apply filters on page reload
-	 * Filter arguments in this case pased with $_GET request
+	 * Filter arguments in this case pased with $_GET request.
+	 * jet_smart_filters() parse arguments from request and combine into array in the same format and same structures as arguments for WP_Query class
+	 * parsed argumnets could be retrieved with jet_smart_filters()->query->get_query_args() method.
 	 * 
 	 * @required: true
 	 */
