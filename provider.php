@@ -25,6 +25,8 @@ class JSF_Query_Loop_Provider extends Jet_Smart_Filters_Provider_Base {
 	 * In this case its a tigger flag described in head of the file.
 	 * Its optional part required for exact provider.
 	 * 
+	 * To make selected Query Loop block filterable you need to add this class to block in block sidebar
+	 * 
 	 * @var string
 	 */
 	protected $trigger_css_class = 'jsf-active';
