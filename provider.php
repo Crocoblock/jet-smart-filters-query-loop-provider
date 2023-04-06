@@ -1,6 +1,13 @@
 <?php
 /**
- * Query Loop block provider
+ * Query Loop block provider.
+ * Each provider ideally should complete next tasks
+ * - Have some related element (usually some list of posts, users, terms etc) which will be reloaded when filter with current provider will be applied
+ * - Have some trigger flag to understand related element is filterable (because on the page could be a few different instances of target element)
+ * - On default render of related element store the data required to render the same element with AJAX. To store this data you need to use jet_smart_filters()->providers->add_provider_settings() method. See the store_defaults method of current example
+ * - Implement ajax_get_content() method. This method called on AJAX request from filter with current provider. This method should apply filtered arguments to element query and than render element HTML according changed query. This HTML returned to front and replaces default element content\
+ * - Implement apply_filters_in_request() method. This method responsible for applying filtered attributes on page reload filter type. The main difference from ajax_get_content() - this method not renders HTML, just applying filtered arguments to query
+ *
  */
 
 // If this file is called directly, abort.
@@ -15,6 +22,7 @@ class JSF_Query_Loop_Provider extends Jet_Smart_Filters_Provider_Base {
 
 	/**
 	 * Custom CSS class. Allows to separate regular Query Loop block from filtered.
+	 * In this case its a tigger flag described in head of the file.
 	 * Its optional part required for exact provider.
 	 * 
 	 * @var string
@@ -152,7 +160,8 @@ class JSF_Query_Loop_Provider extends Jet_Smart_Filters_Provider_Base {
 	}
 
 	/**
-	 * Get Query Loop block instance 
+	 * Get Query Loop block instance.
+	 * Its optional method. Unique for exact provider.
 	 * @return [type] [description]
 	 */
 	public function get_block_by_attributes() {
@@ -178,6 +187,7 @@ class JSF_Query_Loop_Provider extends Jet_Smart_Filters_Provider_Base {
 
 	/**
 	 * Return filtered block instance from blocks list
+	 * Its optional method. Unique for exact provider.
 	 * 
 	 * @param  [type] $blocks       [description]
 	 * @return [type]               [description]
@@ -207,6 +217,7 @@ class JSF_Query_Loop_Provider extends Jet_Smart_Filters_Provider_Base {
 
 	/**
 	 * Check if is currently filtered block
+	 * Its optional method. Unique for exact provider.
 	 * 
 	 * @param  array  $block Parsed block
 	 * @return boolean
@@ -264,7 +275,8 @@ class JSF_Query_Loop_Provider extends Jet_Smart_Filters_Provider_Base {
 	}
 
 	/**
-	 * Add custom query arguments
+	 * Add custom query arguments to query object/array of related element.
+	 * This example based on the WP_Query and related hooks. add_query_args callback attached to appropiate hooks inside apply_filters_in_request() and ajax_get_content() methods
 	 * This methos used by both - AJAX and page reload filters to add filter request data to query.
 	 * You need to check - should it be applied or not before hooking on 'pre_get_posts'
 	 * 
